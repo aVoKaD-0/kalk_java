@@ -47,13 +47,13 @@ public class FreshJuiceTest {
       }
    }
 
-   static String Vynos_NeCelogo_chisla(double number){ // выносит не целое число
+   static String Vynos_NeCelogo_chisla(double number) { // выносит не целое число
       double number2 = number;
       String decrease = "1";
       int dlina_number = 1;
       for (int i = String.valueOf(number2).length()-1; i > 0; i--) {
          if (Character.toString(String.valueOf(number2).charAt(i)) == "e") {
-            decrease += StringUtils.leftPad(yourString, 8, '0');;
+            decrease += StringUtils.leftPad("", Integer.parseInt(String.valueOf(number2).substring(i+2, decrease.length()-1)), '0');
             if (String.valueOf(number2).indexOf(".") != -1) {
                dlina_number = Integer.parseInt(String.valueOf(number2).substring(i+2, String.valueOf(number2).length()-1))+1;
             } else {
@@ -79,30 +79,40 @@ public class FreshJuiceTest {
          dlina -= 1;
          number2 = Double.parseDouble(String.format(String.format("%." + Integer.toString(dlina) + "f"), number2));
       }
-      number3, number4 = Vynos_celogo_chisla((int)(number2));
-      if number4 == 0 and number3 != 0:
-         if dlina_number%2 == 0:
-               number3 /= int("1"+("0"*((dlina_number//2))));
-         else:
+      number3, number4 = Vynos_celogo_chisla((int)(number2));;
+      if (number4 == 0 && number3 != 0) {
+         if (dlina_number%2 == 0) {
+               number3 = number3/((int)("1"+("0"*(StringUtils.leftPad("", dlina_number/2, '0')))));
+         } else {
                ch = 2;
-               number3, number4 = Kur.Vynos_celogo_chisla(int(number2);)
-      if number4 != 0 and number3 != 0:
-         flag = True;
-         for t in range(0, len(str(decrease))): # Смотрим длину после точки у первого числа
-               for i in range(0, len(str(decrease))//2): # Смотрим длину после точки у второго числа
-                  if round(round(((number3/int("1"+"0"*t))**2), t*2)*round((number4/int("1"+"0"*i)), i*2), i*2+t*2) == number:
-                     number3 = number3/int("1"+"0"*t);
-                     number4 = number4/int("1"+"0"*i);
-                     if t == 0:
-                           number3 = str(number3)[:-2];
-                     if i == 0:
-                           number4 = str(number4)[:-2];
-                     flag = False;
-                     break;
-               if flag == False:
+               number3, number4 = Kur.Vynos_celogo_chisla((int)(number2));
+         }
+      }
+      if (number4 != 0 && number3 != 0) {
+         boolean flag = true;
+         for (int t = 0; t < (String.valueOf(decrease)).length(); t++) { // Смотрим длину после точки у первого числа
+            for (int i = 0; i < (String.valueOf(decrease)).length()/2; i++) { // Смотрим длину после точки у второго числа;
+               if (Double.parseDouble(String.format(String.format("%." +  (i*2+t*2) + "f")))*Double.parseDouble(String.format(String.format("%." +  (t*2) + "f"), ((number3/(int)("1"+"0"*t))**2))) == number) {
+                  number3 = number3/(int)("1"+"0"*t);
+                  number4 = number4/(int)("1"+"0"*i);
+                  if (t == 0) {
+                        number3 = String.valueOf(number3)[:-2];
+                  }
+                  if (i == 0) {
+                        number4 = String.valueOf(number4)[:-2];
+                  }
+                  flag = false;
                   break;
-         if flag == True:
-               number3, number4 = 0, 0;
+               }
+            }
+            if (flag == false) {
+               break;
+            }
+         }
+         if (flag == true) {
+            number3, number4 = 0, 0;
+         }
+      }
       return number3, number4;
    }
 
@@ -110,7 +120,7 @@ public class FreshJuiceTest {
     * @param number
     * @return
     */
-   static String  Proverka_dlin_chisla(double number) {
+   static String Proverka_dlin_chisla(double number) {
       boolean flag = true;
       String number2 = String.valueOf(number);
       int tochka = String.valueOf(number2).indexOf(".");
@@ -121,7 +131,7 @@ public class FreshJuiceTest {
                   if (number2.charAt(i) == number2.charAt(t+2)) {
                      if (i-t >= 3) {
                         if ((int)(number2.charAt(t+2)) > 5) {
-                              number2 = number2.substring(0, t-1)+String.valueOf(int)(number2.charAt(t-1))+1);
+                              number2 = number2.substring(0, t-1)+String.valueOf((int)(number2.charAt(t-1))+1);
                               flag = false;
                         } else {
                               number2 = number2.substring(0, t);
@@ -145,6 +155,18 @@ public class FreshJuiceTest {
       return number2;
    }
 
+   static String  Check_e(String number) {
+      String number2 = number;
+      if (number.indexOf("e") != -1) {
+         number2 = "0." + "0"*(Integer.parseInt(String.valueOf(number)[String.valueOf(number).indexOf("e")+2:])-1) StringUtils.leftPad(yourString, 8, '0');
+         if (String.valueOf(number).indexOf(".") != -1) {
+            number2 += String.valueOf(number)[:String.valueOf(number).indexOf(".")] + String.valueOf(number)[String.valueOf(number).indexOf(".")+1:String.valueOf(number).indexOf("e")];
+         } else {
+            number2 += String.valueOf(number)[:String.valueOf(number).indexOf("e")];
+         }
+      }
+      return "number2";
+   }
    public static void main(String args[]){
       System.out.println(dom());
    }
