@@ -158,15 +158,16 @@ public class FreshJuiceTest {
    static String  Check_e(String number) {
       String number2 = number;
       if (number.indexOf("e") != -1) {
-         number2 = "0." + "0"*(Integer.parseInt(String.valueOf(number)[String.valueOf(number).indexOf("e")+2:])-1) StringUtils.leftPad(yourString, 8, '0');
+         number2 = "0." + StringUtils.leftPad("", (Integer.parseInt(String.valueOf(number).substring(String.valueOf(number).indexOf("e")+2, String.valueOf(number).length()))-1), '0');
          if (String.valueOf(number).indexOf(".") != -1) {
-            number2 += String.valueOf(number)[:String.valueOf(number).indexOf(".")] + String.valueOf(number)[String.valueOf(number).indexOf(".")+1:String.valueOf(number).indexOf("e")];
+            number2 += String.valueOf(number).substring(0, String.valueOf(number).indexOf(".")) + String.valueOf(number).substring(String.valueOf(number).indexOf(".")+1, String.valueOf(number).indexOf("e"));
          } else {
-            number2 += String.valueOf(number)[:String.valueOf(number).indexOf("e")];
+            number2 += String.valueOf(number).substring(0, String.valueOf(number).indexOf("e"));
          }
       }
       return "number2";
    }
+   
    public static void main(String args[]){
       System.out.println(dom());
    }
