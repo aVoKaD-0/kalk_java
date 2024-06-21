@@ -1,4 +1,6 @@
+package src;
 import java.lang.Math;
+import org.apache.commons.lang3.StringUtils;
 
 public class FreshJuiceTest {
 
@@ -82,7 +84,7 @@ public class FreshJuiceTest {
       number3, number4 = Vynos_celogo_chisla((int)(number2));;
       if (number4 == 0 && number3 != 0) {
          if (dlina_number%2 == 0) {
-               number3 = number3/((int)("1"+("0"*(StringUtils.leftPad("", dlina_number/2, '0')))));
+               number3 = number3/(Integer.parseInt("1"+((StringUtils.leftPad("", dlina_number/2, '0')))));
          } else {
                ch = 2;
                number3, number4 = Kur.Vynos_celogo_chisla((int)(number2));
@@ -92,7 +94,7 @@ public class FreshJuiceTest {
          boolean flag = true;
          for (int t = 0; t < (String.valueOf(decrease)).length(); t++) { // Смотрим длину после точки у первого числа
             for (int i = 0; i < (String.valueOf(decrease)).length()/2; i++) { // Смотрим длину после точки у второго числа;
-               if (Double.parseDouble(String.format(String.format("%." +  (i*2+t*2) + "f")))*Double.parseDouble(String.format(String.format("%." +  (t*2) + "f"), ((number3/(int)("1"+"0"*t))**2))) == number) {
+               if (Double.parseDouble(String.format(String.format("%." +  (i*2+t*2) + "f")))*Double.parseDouble(String.format(String.format("%." +  (t*2) + "f"), ((number3/Integer.parseInt("1"+(StringUtils.leftPad("", t, '0')))**2))) == number) {
                   number3 = number3/(int)("1"+"0"*t);
                   number4 = number4/(int)("1"+"0"*i);
                   if (t == 0) {
@@ -189,10 +191,10 @@ public class FreshJuiceTest {
             if (koren.substring(i) == "√" && i == (koren).length()) {
                c2 += 1;
             }
-            if (koren.substring(i) == "." && (i != 0 && i != (koren).length()-1) && koren.substring(i-1).isdigit() && koren.substring(i+1).isdigit()) {
+            if (koren.substring(i) == "." && (i != 0 && i != (koren).length()-1) && StringUtils.isNumeric(koren.substring(i-1)) && StringUtils.isNumeric(koren.substring(i-1))) {
                g2 += 1;
             }
-            if (koren.substring(i) == "/" && (i != 0 && i != (koren).length()-1) && koren.substring(i-1).isdigit() && koren.substring(i+1).isdigit()) {
+            if (koren.substring(i) == "/" && (i != 0 && i != (koren).length()-1) && StringUtils.isNumeric(koren.substring(i-1)) && StringUtils.isNumeric(koren.substring(i-1))) {
                f2 += 1;
             }
          }
@@ -242,7 +244,7 @@ public class FreshJuiceTest {
                         return f"Число иррациональное";
                   } else {
                      if (a != 0) {
-                        if (koren.substring(0, a).isdigit() == true) { // если число вне корня целое
+                        if (StringUtils.isNumeric(koren.substring(0, a)) == true) { // если число вне корня целое
                            numerator = Kur.Proverka_dlin_chisla(Double.parseDouble(number*Integer.parseInt(koren.substring(0, a))));
                         } else if (a != 0) { // если число вне корня не целое
                            if (String.toString(number*Double.parseDouble(koren.substring(0, a))).indexOf(-1) == "0" && String.toString(number*Double.parseDouble(koren.substring(0, a))).indexOf(-2) == ".") {
@@ -272,7 +274,7 @@ public class FreshJuiceTest {
                   if (number == 0 && number2 == 0) {
                         return f"Число иррациональное";
                   } else {
-                        if (koren.substring(0, Drob_Ne).isdigit() == true) { // если число вне корня целое
+                        if (StringUtils.isNumeric(koren.substring(0, Drob_Ne)) == true) { // если число вне корня целое
                            numerator = Kur.Proverka_dlin_chisla(Double.parseDouble(number*Integer.parseInt(koren.substring(0, Drob_Ne))));
                         } else if (a != 0) { // если число вне корня не целое
                            if (String.toString(number*Double.parseDouble(koren.substring(0, Drob_Ne))).indexOf(-1) == "0" && String.toString(number*Double.parseDouble(koren.substring(0, Drob_Ne))).indexOf(-2) == ".") {
@@ -306,7 +308,7 @@ public class FreshJuiceTest {
                         return f"Число иррациональное";
                   } else {
                         if (a != 0) {
-                           if (String.toString(koren.substring(0, a)).isdigit() == true) { // если число вне корня целое
+                           if (StringUtils.isNumeric(String.toString(koren.substring(0, a))) == true) { // если число вне корня целое
                               numerator = Kur.Proverka_dlin_chisla(float(number*int(koren.substring(0, a))));
                            } else if (a != 0) { // если число вне корня не целое
                               if (String.toString(number*float(koren.substring(0, a))).indexOf(-1) == "0" && str(number*float(koren.substring(0, a))).indexOf(-2) == ".") {
@@ -336,7 +338,7 @@ public class FreshJuiceTest {
                   if ((number == 0 && number2 == 0) || (number3 == 0 && number4 == 0)) {
                         return f"Число иррациональное";
                   } else {
-                        if (String.toString(koren.substring(0, Drob_Ne)).isdigit() == true) { // если число вне корня целое
+                        if (StringUtils.isNumeric(String.toString(koren.substring(0, Drob_Ne))) == true) { // если число вне корня целое
                            numerator = Kur.Proverka_dlin_chisla(Double.parseDouble(number*Integer.parseInt(koren.substring(0, Drob_Ne))));
                         } else if a != 0 {// если число вне корня не целое
                            if String.toString(number*Double.parseDouble(koren.substring(0, Drob_Ne))).indexOf(-1) == "0" && String.toString(number*Double.parseDouble(koren.substring(0, Drob_Ne))).indexOf(-2) == "." {
@@ -346,7 +348,7 @@ public class FreshJuiceTest {
                               numerator = Kur.Proverka_dlin_chisla(Double.parseDouble(number*Double.parseDouble(koren.substring(0, Drob_Ne))));
                            }
                         }
-                        if String.toString(koren.substring(Drob_Ne+1, a)).isdigit() == true { // если число в корне целое
+                        if StringUtils.isNumeric(String.toString(koren.substring(Drob_Ne+1, a))) == true { // если число в корне целое
                            denominator = Kur.Proverka_dlin_chisla(float(number3*int(koren.substring(Drob_Ne+1, a))));
                         } else if (a != 0) { // если число в корне не целое
                            if str(number3*Double.parseDouble(koren.substring(Drob_Ne+1, a))).indexOf(-1) == "0" && String.toString(number3*Double.parseDouble(koren.substring(Drob_Ne+1, a))).indexOf(-2) == "." {
@@ -397,10 +399,10 @@ public class FreshJuiceTest {
             if (koren.substring(i) == "√" && i == 0) {
                c2 += 1;
             }
-            if (koren.substring(i) == "." && (i != 0 && i != (koren).length()-1) && Character.toString(koren.charAt(i-1)).isdigit() && Character.toString(koren.charAt(i+1)).isdigit()) {
+            if (koren.substring(i) == "." && (i != 0 && i != (koren).length()-1) && StringUtils.isNumeric(Character.toString(koren.charAt(i-1))) && StringUtils.isNumeric(Character.toString(koren.charAt(i-1)))) {
                g2 += 1;
             }
-            if (koren.substring(i) == "/" && (i != 0 && i != (koren).length()-1) && Character.toString(koren.charAt(i-1)).isdigit() && Character.toString(koren.charAt(i+1)).isdigit()) {
+            if (koren.substring(i) == "/" && (i != 0 && i != (koren).length()-1) && StringUtils.isNumeric(Character.toString(koren.charAt(i-1))) && StringUtils.isNumeric(Character.toString(koren.charAt(i-1)))) {
                f2 += 1;
             }
          }
@@ -426,32 +428,32 @@ public class FreshJuiceTest {
                      Drob_Ne = i;
                }
             }
-            if (String.toString(koren.substring(0, Drob_Ne)).isdigit() == true) {
+            if (StringUtils.isNumeric(String.toString(koren.substring(0, Drob_Ne))) == true) {
                number = Integer.parseInt(koren.substring(0, Drob_Ne))**2;
             } else{
                number = Double.parseDouble(koren.substring(0, Drob_Ne))**2;
             }
             if (Drob_Ne != a) {
-               if (String.toString(koren.substring(Drob_Ne+1, a)).isdigit() == true) {
+               if (StringUtils.isNumeric(String.toString(koren.substring(Drob_Ne+1, a))) == true) {
                      number2 = Integer.parseInt(koren.substring(Drob_Ne+1, a))**2;
                } else {
                      number2 = Double.parseDouble(koren.substring(Drob_Ne+1, a))**2;
                }
             }
-            if (String.toString(koren.substring(a+1, Drob_V)).isdigit() == true && (koren.substring(a+1, Drob_V)).length() != 0) {
+            if (StringUtils.isNumeric(String.toString(koren.substring(a+1, Drob_V))) == true && (koren.substring(a+1, Drob_V)).length() != 0) {
                number *= Integer.parseInt(koren.substring(a+1, Drob_V));
-            } else if (str(koren.substring(a+1, Drob_V)).isdigit() != true && (koren.substring(a+1, Drob_V)).length() != 0) {
+            } else if (StringUtils.isNumeric(String.toString(koren.substring(a+1, Drob_V))) != true && (koren.substring(a+1, Drob_V)).length() != 0) {
                number *= Double.parseDouble(koren.substring(a+1, Drob_V));
             }
             if (Drob_V != (koren).length()) {
                if (number2 == 0) {
                   number2 = 1;
                }
-               if (String.toString(koren.substring(Drob_V+1, koren.length()-1)).isdigit() == true && (koren.substring(Drob_V+1, koren.length()-1)).length() != 0) {
-                  number2 *= Integer.parseInt(koren.substring(Drob_V+1, ));
+               if (StringUtils.isNumeric(String.toString(koren.substring(Drob_V+1, koren.length()-1))) == true && (koren.substring(Drob_V+1, koren.length()-1)).length() != 0) {
+                  number2 *= Integer.parseInt(koren.substring(Drob_V+1, koren.length()-1));
                }
-               else if (String.toString(koren.substring(Drob_V+1, koren.length()-1)).isdigit() != true && (koren.substring(Drob_V+1, koren.length()-1)).length() != 0) {
-                  number2 *= Double.parseDouble(koren.substring(Drob_V+1, ));
+               else if (StringUtils.isNumeric(String.toString(koren.substring(Drob_V+1, koren.length()-1))) != true && (koren.substring(Drob_V+1, koren.length()-1)).length() != 0) {
+                  number2 *= Double.parseDouble(koren.substring(Drob_V+1, koren.length()-1));
                }
             }
             if (type(number) == Double.parseDouble) {
