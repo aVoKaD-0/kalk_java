@@ -26,5 +26,7 @@ public class proba {
         System.out.println(d2.getClass().getSimpleName() + n);
         n = 2.9;
         System.out.println(n);
+        String p = "asdrfgt";
+        System.out.println(p.substring(0, p.length()-1));
     }
 }
