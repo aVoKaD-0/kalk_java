@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.lang.Math;
 import org.apache.commons.lang3.StringUtils;
 
-public class FreshJuiceTest {
+public class kuryator {
 
    static int ch = 1;
    // static double x1;
