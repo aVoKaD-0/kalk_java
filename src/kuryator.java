@@ -1,9 +1,9 @@
 package src;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+// import java.io.BufferedReader;
+// import java.io.File;
+// import java.io.FileReader;
+// import java.io.FileWriter;
+// import java.io.IOException;
 import java.lang.Math;
 import org.apache.commons.lang3.StringUtils;
 
@@ -21,10 +21,13 @@ public class kuryator {
 
    static Double[] Vynos_celogo_chisla(int number) {
       double number2 = Math.sqrt(number);
-      if (String.valueOf(number2).indexOf(".") == String.valueOf(number2).length()-2 && ch == 1) {
-            ch = 1;
-            System.out.println("null");
-            return new Double[]{number2, 0.0};
+      if (String.valueOf(number2).indexOf(".") == String.valueOf(number2).length()-2) {
+            if (ch == 1) {
+               return new Double[]{number2, 0.0};
+            } else {
+               ch = 1;
+               
+            }
       }
       Double vne_kornya = 1.0;
       Double pod_kornem = number * 1.0;
@@ -44,10 +47,8 @@ public class kuryator {
          }
       }
       if (False == 1 && pod_kornem != number) {
-         System.out.println("null2");
          return new Double[] {vne_kornya, pod_kornem};
       } else {
-         System.out.println("null3");
          return new Double[]{0.0, 0.0};
       }
    }
@@ -79,21 +80,17 @@ public class kuryator {
       if (decrease2 != 1.0) {
          number2 = Math.round(number2*10d)/10d;
       }
-      System.out.println(number2 + " df");
       decrease = String.valueOf(Check_e(decrease));
       // decrease = str(decrease);
       while (String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' || String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.') {
          number2 *= 10;
          decrease = "0.0" + decrease.substring(2, decrease.length());
          dlina -= 1;
-         // System.out.println(dlina + " " + decrease + " " + number2 + " 1" + StringUtils.leftPad("", dlina, '0') + "d " + Math.round(number2*10d)/10d);
          number2 = Math.round(number2*Double.parseDouble("1" + StringUtils.leftPad("", dlina, '0') + "d"))/Double.parseDouble("1" + StringUtils.leftPad("", dlina, '0') + "d");
-         System.out.println(dlina + " " + decrease + " " + number2 + " 1" + StringUtils.leftPad("", dlina, '0') + "d");
       }
       celiy = Vynos_celogo_chisla((int)(number2));
       number3 = celiy[0];
       number4 = celiy[1];
-      System.out.println(celiy + " celiy " + number3 + " " + number4 + " " + number2);
       if (number4 == 0 && number3 != 0) {
          if (dlina_number%2 == 0) {
                number3 = number3/(Integer.parseInt("1"+((StringUtils.leftPad("", dlina_number/2, '0')))));
@@ -104,7 +101,6 @@ public class kuryator {
                number4 = celiy[1];
          }
       }
-      System.out.println(number3 + " " + number4);
       if (number4 != 0 && number3 != 0) {
          boolean flag = true;
          for (int t = 0; t < (String.valueOf(decrease)).length(); t++) { // Смотрим длину после точки у первого числа
@@ -131,7 +127,6 @@ public class kuryator {
             number4 = 0;
          }
       }
-      System.out.println(number3 + " " + number4);
       return new Double[] {number3, number4};
    }
 
@@ -189,7 +184,7 @@ public class kuryator {
    }
 
    static String VynosIzPodKoren(String koren) { //вынос из под корня
-      // try {
+      try {
          int c = 0; // проверка правильно ли стоит знак корня в строке
          int f = 0; // проверка правильно ли стоит знак деления
          int g = 0; // проверка правильно ли стоят числа с плавающей запятой
@@ -207,40 +202,28 @@ public class kuryator {
          for (int i = 0; i < (koren).length(); i++) {
             if (koren.charAt(i) == '√') {
                c += 1;
-               System.out.println("a");
             }
             if (koren.charAt(i) == '/') {
                f += 1;
-               System.out.println("b");
             }
             if (koren.charAt(i) == '.') {
                g += 1;
-               System.out.println("c");
             }
             if (koren.charAt(i) == '√' && i == (koren).length()) {
                c2 += 1;
-               System.out.println("d");
             }
             if (koren.charAt(i) == '.' && (i != 0 && i != (koren).length()) && StringUtils.isNumeric(Character.toString(koren.charAt(i-1))) && StringUtils.isNumeric(Character.toString(koren.charAt(i+1)))) {
                g2 += 1;
-               System.out.println("f");
             }
             if (koren.charAt(i) == '/' && (i != 0 && i != (koren).length()) && StringUtils.isNumeric(Character.toString(koren.charAt(i-1))) && StringUtils.isNumeric(Character.toString(koren.charAt(i+1)))) {
                f2 += 1;
-               System.out.println("j");
             }
-            System.out.println(i + " " + String.valueOf(koren.charAt(i)));
          }
-         System.out.println(g + " " + c + " " + f + " " + g2 + " " + c2 + " " + f2 + " " + (koren).length());
          if (g > 4 || c != 1 || f > 2 || f != f2 || g != g2 || c2 != 0) {
-               System.out.println("ASD");
-               return "Проверьте правильность ввода";
+            return "Проверьте правильность ввода";
          } else if (koren.length() == 1) {
-               System.out.println("A2SD");
-               return "Проверьте правильность ввода";
-
+            return "Проверьте правильность ввода";
          } else {
-            System.out.println("As");
             int a = koren.indexOf("√");
             boolean NeKPL = true; // проверяет есть ли число с плавающей запятой вне корня
             boolean KPL = true; // проверяет есть ли число с плавающей запятой под корнем
@@ -278,20 +261,16 @@ public class kuryator {
                   Drob_Ne = i;
                }
             }
-            System.out.println(KDR + " " + NeKDR + " " + KPL + " " + NeKPL);
             if (KDR == true && (KPL == true || KPL == false)) {
                if (koren.substring(a+1, koren.length()).indexOf(".") == -1) {
                   celiy = Vynos_celogo_chisla(Integer.parseInt(koren.substring(a+1, koren.length())));
                   number = celiy[0];
                   number2 = celiy[1];
-                  System.out.println("A" + " " + celiy + " " + koren.substring(a+1, koren.length()));
                } else {
                   neceliy = Vynos_NeCelogo_chisla(Double.parseDouble(koren.substring(a+1, koren.length())));
                   number = neceliy[0];
                   number2 = neceliy[1];
-                  System.out.println("B " + koren.substring(a+1, koren.length()));
                }
-               System.out.println(number + " " + number2);
                if (NeKDR == true && (NeKPL == true || NeKPL == false)) { // если вне корня либо целое число, либо числа нету
                   if (number == 0.0 && (number2) == 0.0) {
                         return "Число иррациональное";
@@ -305,11 +284,11 @@ public class kuryator {
                         if (StringUtils.isNumeric(koren.substring(0, a)) == true) { // если число вне корня целое
                            numerator = Proverka_dlin_chisla((Double.parseDouble(String.valueOf(number))*Double.parseDouble(koren.substring(0, a))));
                         } else if (a != 0) { // если число вне корня не целое
-                           // if (Character.toString(String.valueOf(((number))*Double.parseDouble(koren.substring(0, a))).charAt(-1)) == "0" && Character.toString(String.valueOf(((number))*Double.parseDouble(koren.substring(0, a))).charAt(-2)) == ".") {
-                           //       numerator = Double.parseDouble(String.valueOf(((number))*Double.parseDouble(koren.substring(0, a))).substring(0, String.valueOf(((number))*Double.parseDouble(koren.substring(0, a))).length()-3));
-                           // } else {
-                           numerator = Proverka_dlin_chisla(((number))*Double.parseDouble(koren.substring(0, a)));
-                           // }
+                           if (Character.toString(String.valueOf(((number))*Double.parseDouble(koren.substring(0, a))).charAt(-1)) == "0" && Character.toString(String.valueOf(((number))*Double.parseDouble(koren.substring(0, a))).charAt(-2)) == ".") {
+                              numerator = Double.parseDouble(String.valueOf(((number))*Double.parseDouble(koren.substring(0, a))).substring(0, String.valueOf(((number))*Double.parseDouble(koren.substring(0, a))).length()-3));
+                           } else {
+                              numerator = Proverka_dlin_chisla(((number))*Double.parseDouble(koren.substring(0, a)));
+                           }
                         }
                      } else {
                         numerator = number;
@@ -322,7 +301,7 @@ public class kuryator {
                         } else {
                            return String.valueOf(numerator);
                         }
-                     } else if (number2 != 0.0) { // если вне дроби есть число и число расскладывается нацело
+                     } else if (number2 != 0.0) { // если вне дроби есть число и число нерасскладывается нацело
                         if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.') {
                            if (String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.') {
                               return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "√" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2);
@@ -336,14 +315,13 @@ public class kuryator {
                               return String.valueOf(numerator) + "√" + number2;
                            }
                         }
-                     } 
-                     // else {
-                     //    if (number2 == 0.0) {
-                     //       return String.valueOf(number);
-                     //    } else {
-                     //       return number + "√" + number2;
-                     //    }
-                     // }
+                     } else {
+                        if (number2 == 0.0) {
+                           return String.valueOf(number);
+                        } else {
+                           return number + "√" + number2;
+                        }
+                     }
                   }
                } else if (NeKDR == false && (NeKPL == true || NeKPL == false)) { // если вне корня дробь
                   if (number == 0.0 && number2 == 0.0) {
@@ -352,11 +330,11 @@ public class kuryator {
                         if (StringUtils.isNumeric(koren.substring(0, Drob_Ne)) == true) { // если число вне корня целое
                            numerator = Proverka_dlin_chisla((((number))*Integer.parseInt(koren.substring(0, Drob_Ne))));
                         } else if (a != 0) { // если число вне корня не целое
-                           // if (Character.toString(String.valueOf(((number))*Double.parseDouble(koren.substring(0, Drob_Ne))).charAt(-1)) == "0" && Character.toString(String.valueOf(((number))*Double.parseDouble(koren.substring(0, Drob_Ne))).charAt(-2)) == ".") {
-                           //    numerator = String.valueOf(((number))*Double.parseDouble(koren.substring(0, Drob_Ne))).substring(0, -2);
-                           // } else {
-                           numerator = Proverka_dlin_chisla((((number))*Double.parseDouble(koren.substring(0, Drob_Ne))));
-                           // }
+                           if (Character.toString(String.valueOf(((number))*Double.parseDouble(koren.substring(0, Drob_Ne))).charAt(-1)) == "0" && Character.toString(String.valueOf(((number))*Double.parseDouble(koren.substring(0, Drob_Ne))).charAt(-2)) == ".") {
+                              numerator = Double.parseDouble(String.valueOf(number*Double.parseDouble(koren.substring(0, Drob_Ne))).substring(0, String.valueOf(number).length()-2));
+                           } else {
+                              numerator = Proverka_dlin_chisla((((number))*Double.parseDouble(koren.substring(0, Drob_Ne))));
+                           }
                         }
                         numerator = Check_e(String.valueOf(numerator));
                         number2 = Check_e(String.valueOf(number2));
@@ -406,11 +384,11 @@ public class kuryator {
                         if (StringUtils.isNumeric(koren.substring(0, a)) == true) { // если число вне корня целое
                            numerator = Proverka_dlin_chisla((number*Integer.parseInt(koren.substring(0, a))));
                         } else if (a != 0) { // если число вне корня не целое
-                           // if (Character.toString(String.valueOf(number*Double.parseDouble(koren.substring(0, a))).charAt(-1)) == "0" && Character.toString(String.valueOf(number*Double.parseDouble(koren.substring(0, a))).charAt(-2)) == ".") {
-                           //       numerator = Double.parseDouble(String.valueOf(number*Double.parseDouble(koren.substring(0, a))).substring(0, String.valueOf(number*Double.parseDouble(koren.substring(0, a))).length()-2));
-                           // } else if (a != 0) {
-                           numerator = Proverka_dlin_chisla((number*Double.parseDouble(koren.substring(0, a))));
-                           // }
+                           if (Character.toString(String.valueOf(number*Double.parseDouble(koren.substring(0, a))).charAt(-1)) == "0" && Character.toString(String.valueOf(number*Double.parseDouble(koren.substring(0, a))).charAt(-2)) == ".") {
+                              numerator = Double.parseDouble(String.valueOf(number*Double.parseDouble(koren.substring(0, a))).substring(0, String.valueOf(number*Double.parseDouble(koren.substring(0, a))).length()-2));
+                           } else if (a != 0) {
+                              numerator = Proverka_dlin_chisla((number*Double.parseDouble(koren.substring(0, a))));
+                           }
                         }
                      } else {
                         numerator = number;
@@ -419,85 +397,75 @@ public class kuryator {
                      number2 = Check_e(String.valueOf(number2));
                      number3 = Check_e(String.valueOf(number3));
                      number4 = Check_e(String.valueOf(number4));
-                     if (number2 == 0.0 && number4 == 0.0) { // если исло расскладывается нацело и знаменатель расскадывается нацело
-                        if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) == '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) != '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) != '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "/" + number3;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) == '.') {
-                           return numerator + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) != '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) != '.') {
-                           return numerator + "/" + number3;
-                        }
-                     } else if (number2 == 0.0 && number4 != 0.0) { // если число расскладывается нацело, но знаменатель расскадывается не нацело
-                        if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2) + "√1/" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) != '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) != '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2) + "√1/" + number4;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) != '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) != '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) != '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "/" + number3 + "√1/" + number4;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) != '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "/" + number3 + "√1/" + number4;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) != '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) != '.') {
-                           return numerator + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2) + "√1/" + number4;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return numerator + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2) + "√1/" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) != '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return numerator + "/" + number3 + "√1/" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
+                     // System.out.println(numerator + " " + number + " " + number2 + " " + number3 + " " + number4);
+                     if (number2 == 0.0 && number4 == 0.0) { // если число расскладывается нацело и знаменатель расскадывается нацело
+                        if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0') {
+                           koren = String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2);
                         } else {
-                           return numerator + "/" + number3 + "√1/" + number4;
+                           koren = String.valueOf(numerator);
                         }
-                     } else if (number2 != 0.0 && number4 == 0.0) { // если число расскладывается нацело, но знаменатель расскадывается нацело
-                        if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2) + "√1/" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2) + "√1/" + number2;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) != '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) != '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "/" + number3 + "√1/" + number2;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) != '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) != '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "/" + number3 + "√1/" + number2;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.') {
-                           return numerator + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2) + "√1/" + number2;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.') {
-                           return numerator + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2) + "√1/" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) != '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) != '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.') {
-                           return numerator + "/" + number3 + "√1/" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2);
+                        if (String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0') {
+                           return koren + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2);
                         } else {
-                           return numerator + "/" + number3 + "√1/" + number2;
+                           return koren + "/" + number3;
                         }
-                     } else if (number2 != 0.0 && number4 != 0.0) { // если число расскладывается нацело и знаменатель расскадывается не нацело
-                        if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "√" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2) + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2) + "√" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) != '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) != '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "√" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2) + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2) + "√" + number4;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) != '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) != '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) != '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "√" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2) + "/" + number3 + "√" + number4;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) != '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) != '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) != '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "√" + number2 + "/" + number3 + "√" + number4;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) != '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return numerator + "√" + number2 + "/" + number3 + "√" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return numerator + "√" + number2 + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2) + "√" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return numerator + "√" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2) + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2) + "√" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) != '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "√" + number2 + "/" + number3 + "√" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "√" + number2 + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2) + "√" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) != '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "√" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2) + "/" + number3 + "√" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) != '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "√" + number2 + "/" + number3 + "√" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) != '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) != '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) != '.') {
-                           return numerator + "√" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2) + "/" + number3 + "√" + number4;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) != '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) != '.') {
-                           return numerator + "√" + number2 + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2) + "√" + number4;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) != '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return numerator + "√" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2) + "/" + number3 + "√" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.' && String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0' && String.valueOf(number3).charAt(String.valueOf(number3).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) != '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) != '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "√" + number2 + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2) + "√" + number4;
+                     } else if (number2 == 0.0 && number4 != 0.0) { // если число расскладывается нацело, но знаменатель нерасскадывается не нацело
+                        if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0') {
+                           koren = String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2);
                         } else {
-                           return numerator + "√" + number2 + "/" + number3 + "√" + number4;
+                           koren = String.valueOf(numerator);
+                        }
+                        if (String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0') {
+                           koren = koren + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2);
+                        } else  {
+                           koren = koren + "/" + number3;
+                        }
+                        if (String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0') {
+                           return koren + "√1/" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
+                        } else {
+                           return koren + "√1/" + String.valueOf(number4);
+                        }
+                     } else if (number2 != 0.0 && number4 == 0.0) { // если число нерасскладывается нацело, но знаменатель расскадывается нацело
+                        if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0') {
+                           koren = String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2);
+                        } else {
+                           koren = String.valueOf(numerator);
+                        }
+                        if (String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0') {
+                           koren = koren + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2);
+                        } else  {
+                           koren = koren + "/" + number3;
+                        }
+                        if (String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0') {
+                           return koren + "√" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2);
+                        } else {
+                           return koren + "√" + String.valueOf(number2);
+                        }
+                     } else if (number2 != 0.0 && number4 != 0.0) { // если число нерасскладывается нацело и знаменатель нерасскадывается не нацело
+                        if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0') {
+                           koren = String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2);
+                        } else {
+                           koren = String.valueOf(numerator);
+                        }
+                        if (String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0') {
+                           koren = koren + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2);
+                        } else  {
+                           koren = koren + "/" + number3;
+                        }
+                        if (String.valueOf(number3).charAt(String.valueOf(number3).length()-1) == '0') {
+                           koren = koren + "/" + String.valueOf(number3).substring(0, String.valueOf(number3).length()-2);
+                        } else {
+                           koren = koren + "/" + number3;
+                        }
+                        if (String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0') {
+                           koren = koren + "√" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2);
+                        } else {
+                           koren = koren + "√" + String.valueOf(number2);
+                        } 
+                        if (String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0') {
+                           return koren + "/" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
+                        } else {
+                           return koren + "/" + String.valueOf(number4);
                         }
                      }
                   }
@@ -508,127 +476,111 @@ public class kuryator {
                      if (StringUtils.isNumeric(String.valueOf(koren.substring(0, Drob_Ne))) == true) { // если число вне корня целое
                         numerator = Proverka_dlin_chisla((number*Integer.parseInt(koren.substring(0, Drob_Ne))));
                      } else if (a != 0) {// если число вне корня не целое
-                        // if (Character.toString(String.valueOf(number*Double.parseDouble(koren.substring(0, Drob_Ne))).charAt(-1)) == "0" && Character.toString(String.valueOf(number*Double.parseDouble(koren.substring(0, Drob_Ne))).charAt(-2)) == ".") {
-                        //    numerator = (String.valueOf(number*Double.parseDouble(koren.substring(0, Drob_Ne))).substring(0, String.valueOf(number*Double.parseDouble(koren.substring(0, Drob_Ne))).length()-2));
-                        // } else {
-                        numerator = Proverka_dlin_chisla((number*Double.parseDouble(koren.substring(0, Drob_Ne))));
-                        // }
+                        if (Character.toString(String.valueOf(number*Double.parseDouble(koren.substring(0, Drob_Ne))).charAt(-1)) == "0" && Character.toString(String.valueOf(number*Double.parseDouble(koren.substring(0, Drob_Ne))).charAt(-2)) == ".") {
+                           numerator = Double.parseDouble(String.valueOf(number*Double.parseDouble(koren.substring(0, Drob_Ne))).substring(0, String.valueOf(number*Double.parseDouble(koren.substring(0, Drob_Ne))).length()-2));
+                        } else {
+                           numerator = Proverka_dlin_chisla((number*Double.parseDouble(koren.substring(0, Drob_Ne))));
+                        }
                      }
                      if (StringUtils.isNumeric(String.valueOf(koren.substring(Drob_Ne+1, a))) == true) { // если число в корне целое
                         denominator = Proverka_dlin_chisla((number3*Integer.parseInt(koren.substring(Drob_Ne+1, a))));
                      } else if (a != 0) { // если число в корне не целое
-                        // if (Character.toString(String.valueOf(number3*Double.parseDouble(koren.substring(Drob_Ne+1, a))).charAt(-1)) == "0" && Character.toString(String.valueOf(number3*Double.parseDouble(koren.substring(Drob_Ne+1, a))).charAt(-2)) == ".") {
-                        //    denominator = String.valueOf(number3*Double.parseDouble(koren.substring(Drob_Ne+1, a))).substring(0, -2);
-                        // } else {
-                        denominator = Proverka_dlin_chisla((number3*Double.parseDouble(koren.substring(Drob_Ne+1, a))));
-                        // }
+                        if (Character.toString(String.valueOf(number3*Double.parseDouble(koren.substring(Drob_Ne+1, a))).charAt(-1)) == "0" && Character.toString(String.valueOf(number3*Double.parseDouble(koren.substring(Drob_Ne+1, a))).charAt(-2)) == ".") {
+                           denominator = Double.parseDouble(String.valueOf(number3*Double.parseDouble(koren.substring(Drob_Ne+1, a))).substring(0, String.valueOf(denominator).length()-2));
+                        } else {
+                           denominator = Proverka_dlin_chisla((number3*Double.parseDouble(koren.substring(Drob_Ne+1, a))));
+                        }
                      }
                      numerator = Check_e(String.valueOf(numerator));
                      number2 = Check_e(String.valueOf(number2));
                      number3 = Check_e(String.valueOf(number3));
                      number4 = Check_e(String.valueOf(number4));
+                     // if (number2 == 0.0 && number4 == 0.0) { // если число расскладывается нацело и знаменатель расскадывается нацело
+                     //    return numerator + "/" + denominator;
+                     // } else if (number2 == 0.0 && number4 != 0.0) { // если число расскладывается нацело, но знаменатель расскадывается не нацело
+                     //    return numerator + "/" + denominator + "√1/" + number4;
+                     // }else if (number2 != 0.0 && number4 == 0.0) { // если число расскладывается нацело, но знаменатель расскадывается нацело
+                     //    return numerator + "/" + denominator + "√" + number2;
+                     // } else if (number2 != 0.0 && number4 != 0.0) { // если число расскладывается нацело и знаменатель расскадывается не нацело
+                     //    return numerator + "√" + number2 + "/" + denominator + "√" + number4;
+                     // }
                      if (number2 == 0.0 && number4 == 0.0) { // если число расскладывается нацело и знаменатель расскадывается нацело
-                        return numerator + "/" + denominator;
-                     } else if (number2 == 0.0 && number4 != 0.0) { // если число расскладывается нацело, но знаменатель расскадывается не нацело
-                        return numerator + "/" + denominator + "√1/" + number4;
-                     }else if (number2 != 0.0 && number4 == 0.0) { // если число расскладывается нацело, но знаменатель расскадывается нацело
-                        return numerator + "/" + denominator + "√" + number2;
-                     } else if (number2 != 0.0 && number4 != 0.0) { // если число расскладывается нацело и знаменатель расскадывается не нацело
-                        return numerator + "√" + number2 + "/" + denominator + "√" + number4;
-                     }
-                     if (number2 == 0.0 && number4 == 0.0) { // если исло расскладывается нацело и знаменатель расскадывается нацело
-                        if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) == '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) == '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "/" + String.valueOf(denominator).substring(0, String.valueOf(denominator).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) != '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) != '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "/" + denominator;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) == '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) == '.') {
-                           return numerator + "/" + String.valueOf(denominator).substring(0, String.valueOf(denominator).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) != '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) != '.') {
-                           return numerator + "/" + denominator;
+                        if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0') {
+                           koren = String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2);
+                        } else {
+                           koren = String.valueOf(numerator);
+                        }
+                        if (String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) == '0') {
+                           return koren + "/" + String.valueOf(denominator).substring(0, String.valueOf(denominator).length()-2);
+                        } else {
+                           return koren + "/" + denominator;
                         }
                      } else if (number2 == 0.0 && number4 != 0.0) { // если число расскладывается нацело, но знаменатель расскадывается не нацело
-                        if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) == '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "/" + String.valueOf(denominator).substring(0, String.valueOf(denominator).length()-2) + "√1/" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) == '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) != '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) != '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "/" + String.valueOf(denominator).substring(0, String.valueOf(denominator).length()-2) + "√1/" + number4;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) != '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) != '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) != '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "/" + denominator + "√1/" + number4;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) != '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "/" + denominator + "√1/" + number4;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) == '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) != '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) != '.') {
-                           return numerator + "/" + String.valueOf(denominator).substring(0, String.valueOf(denominator).length()-2) + "√1/" + number4;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) == '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return numerator + "/" + String.valueOf(denominator).substring(0, String.valueOf(denominator).length()-2) + "√1/" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) != '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return numerator + "/" + denominator + "√1/" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
+                        if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0') {
+                           koren = String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2);
                         } else {
-                           return numerator + "/" + denominator + "√1/" + number4;
+                           koren = String.valueOf(numerator);
+                        }
+                        if (String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) == '0') {
+                           koren = koren + "/" + String.valueOf(denominator).substring(0, String.valueOf(denominator).length()-2);
+                        } else {
+                           koren = koren + "/" + denominator;
+                        }
+                        if (String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0') {
+                           return koren + "√1/" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
+                        } else {
+                           return koren + "√1/" + String.valueOf(number4);
                         }
                      } else if (number2 != 0.0 && number4 == 0.0) { // если число расскладывается нацело, но знаменатель расскадывается нацело
-                        if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) == '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "/" + String.valueOf(denominator).substring(0, String.valueOf(denominator).length()-2) + "√1/" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) == '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "/" + String.valueOf(denominator).substring(0, String.valueOf(denominator).length()-2) + "√1/" + number2;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) != '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) != '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "/" + denominator + "√1/" + number2;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) != '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) != '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "/" + denominator + "√1/" + number2;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) == '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.') {
-                           return numerator + "/" + String.valueOf(denominator).substring(0, String.valueOf(denominator).length()-2) + "√1/" + number2;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) == '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.') {
-                           return numerator + "/" + String.valueOf(denominator).substring(0, String.valueOf(denominator).length()-2) + "√1/" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) != '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) != '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.') {
-                           return numerator + "/" + denominator + "√1/" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2);
+                        if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0') {
+                           koren = String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2);
                         } else {
-                           return numerator + "/" + denominator + "√1/" + number2;
+                           koren = String.valueOf(numerator);
+                        }
+                        if (String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) == '0') {
+                           koren = koren + "/" + String.valueOf(denominator).substring(0, String.valueOf(denominator).length()-2);
+                        } else  {
+                           koren = koren + "/" + denominator;
+                        }
+                        if (String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0') {
+                           return koren + "√" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2);
+                        } else {
+                           return koren + "√" + String.valueOf(number2);
                         }
                      } else if (number2 != 0.0 && number4 != 0.0) { // если число расскладывается нацело и знаменатель расскадывается не нацело
-                        if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) == '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "√" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2) + "/" + String.valueOf(denominator).substring(0, String.valueOf(denominator).length()-2) + "√" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) == '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) != '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) != '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "√" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2) + "/" + String.valueOf(denominator).substring(0, String.valueOf(denominator).length()-2) + "√" + number4;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) != '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) != '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) != '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "√" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2) + "/" + denominator + "√" + number4;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) != '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) != '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) != '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "√" + number2 + "/" + denominator + "√" + number4;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) != '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return numerator + "√" + number2 + "/" + denominator + "√" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) == '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return numerator + "√" + number2 + "/" + String.valueOf(denominator).substring(0, String.valueOf(denominator).length()-2) + "√" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) == '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return numerator + "√" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2) + "/" + String.valueOf(denominator).substring(0, String.valueOf(denominator).length()-2) + "√" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) != '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "√" + number2 + "/" + denominator + "√" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) == '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "√" + number2 + "/" + String.valueOf(denominator).substring(0, String.valueOf(denominator).length()-2) + "√" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) != '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "√" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2) + "/" + denominator + "√" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) != '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "√" + number2 + "/" + denominator + "√" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) != '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) != '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) != '.') {
-                           return numerator + "√" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2) + "/" + denominator + "√" + number4;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) == '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) != '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) != '.') {
-                           return numerator + "√" + number2 + "/" + String.valueOf(denominator).substring(0, String.valueOf(denominator).length()-2) + "√" + number4;
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) != '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) != '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) == '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) != '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) != '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) == '.') {
-                           return numerator + "√" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2) + "/" + denominator + "√" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
-                        } else if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0' && String.valueOf(numerator).charAt(String.valueOf(numerator).length()-2) == '.' && String.valueOf(number2).charAt(String.valueOf(number2).length()-1) != '0' && String.valueOf(number2).charAt(String.valueOf(number2).length()-2) != '.' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) == '0' && String.valueOf(denominator).charAt(String.valueOf(denominator).length()-2) == '.' && String.valueOf(number4).charAt(String.valueOf(number4).length()-1) != '0' && String.valueOf(number4).charAt(String.valueOf(number4).length()-2) != '.') {
-                           return String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2) + "√" + number2 + "/" + String.valueOf(denominator).substring(0, String.valueOf(denominator).length()-2) + "√" + number4;
+                        if (String.valueOf(numerator).charAt(String.valueOf(numerator).length()-1) == '0') {
+                           koren = String.valueOf(numerator).substring(0, String.valueOf(numerator).length()-2);
                         } else {
-                           return numerator + "√" + number2 + "/" + denominator + "√" + number4;
+                           koren = String.valueOf(numerator);
+                        }
+                        if (String.valueOf(denominator).charAt(String.valueOf(denominator).length()-1) == '0') {
+                           koren = koren + "/" + String.valueOf(denominator).substring(0, String.valueOf(denominator).length()-2);
+                        } else  {
+                           koren = koren + "/" + denominator;
+                        }
+                        if (String.valueOf(number2).charAt(String.valueOf(number2).length()-1) == '0') {
+                           koren = koren + "√" + String.valueOf(number2).substring(0, String.valueOf(number2).length()-2);
+                        } else {
+                           koren = koren + "√" + String.valueOf(number2);
+                        } 
+                        if (String.valueOf(number4).charAt(String.valueOf(number4).length()-1) == '0') {
+                           return koren + "/" + String.valueOf(number4).substring(0, String.valueOf(number4).length()-2);
+                        } else {
+                           return koren + "/" + String.valueOf(number4);
                         }
                      }
                   }
                }
             }
          }
-      return "Проверьте правильность ввода";
-      // } except {
-      //    return "Проверьте правильность ввода";
-      // }
+         return "Проверьте правильность ввода";
+      } catch(Exception e) {
+         return "Проверьте правильность ввода";
+      }
    }
 
    static String VnosPodKoren(String koren) {
-      // try {
+      try {
          int c = 0;
          int f = 0;
          int g = 0;
@@ -663,14 +615,14 @@ public class kuryator {
          } else if ((koren).length() == 1) {
             return "Проверьте правильность ввода";
          } else {
-            int a = String.valueOf(koren).indexOf("√");
+            int a = koren.indexOf("√");
             int Drob_Ne = a;
             int Drob_V = koren.length();
             Double number = 0.0;
             Double number2 = 0.0;
             // Double number3 = 0;
             // Double number4 = 0;
-            for (int i = 0; i < (koren).length(); i++) {
+            for (int i = a; i < (koren).length(); i++) {
                if (koren.charAt(i) == '/') {
                      Drob_V = i;
                }
@@ -692,7 +644,7 @@ public class kuryator {
                      number2 = Math.pow(Double.parseDouble(koren.substring(Drob_Ne+1, a)), 2);
                }
             }
-            if (StringUtils.isNumeric(String.valueOf(koren.substring(a+1, Drob_V))) == true && (koren.substring(a+1, Drob_V)).length() != 0) {
+            if (StringUtils.isNumeric(String.valueOf(koren.substring(a+1, Drob_V))) == true && koren.substring(a+1, Drob_V).length() != 0) {
                number = number*Integer.parseInt(koren.substring(a+1, Drob_V));
             } else if (StringUtils.isNumeric(String.valueOf(koren.substring(a+1, Drob_V))) != true && (koren.substring(a+1, Drob_V)).length() != 0) {
                number = number*Double.parseDouble(koren.substring(a+1, Drob_V));
@@ -730,44 +682,18 @@ public class kuryator {
                }
             }
          }
-      // } except {
-      //       return "Проверьте правильность ввода";
-      // }
+      } catch(Exception e) {
+         System.out.println("asd3");
+            return "Проверьте правильность ввода";
+      }
    }
    
    public static void main(String args[]) {
-      // String ur = "√4/4";
-      // System.out.println("Ответ: " + VynosIzPodKoren(ur));
-      try(FileWriter writer = new FileWriter("o.txt", false)) {
-        // запись всей строки
-         try {
-            // читаем посимвольно
-            File file = new File("ppp.txt");
-            //создаем объект FileReader для объекта File
-            FileReader fr = new FileReader(file);
-            //создаем BufferedReader с существующего FileReader для построчного считывания
-            BufferedReader reader = new BufferedReader(fr);
-            String line = reader.readLine();
-            while (line != null) {
-               for (int i = 0; i < line.length()-3; i++) {
-                  // System.out.println(line.substring(i, i+3) );
-                  if (line.charAt(i) == 'в') {
-                     System.out.println("a");
-                     line = line.substring(0, i) + "√" + line.substring(i+3, line.length());
-                     break;
-                  }
-               }
-               System.out.println("Ответы: " + VynosIzPodKoren(line));
-               writer.append(VynosIzPodKoren(line) + "\n");
-               // считываем остальные строки в цикле
-               line = reader.readLine();
-               
-            }
-         } catch(IOException ex) {
-               System.out.println(ex.getMessage());
-         }   
-     } catch(IOException ex) {
-         System.out.println(ex.getMessage());
-     } 
+      String ur = "2√";
+      System.out.println("Ответ: " + VnosPodKoren(ur));
+      String[] a = new String[]{"2√", "2/2√", "1.2√", "-2√", "2√3", "-3√2"};
+      for (int i = 0; i < 6; i++) {
+         System.out.println(VnosPodKoren(a[i]));
+      }
    }
 }
